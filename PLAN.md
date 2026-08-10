@@ -13,9 +13,9 @@
 
 ## Phase 1 — 決定論的ルールエンジン
 
-- [ ] immutable `GameState` と唯一の更新口 `reduce(state, action)` を実装する
-- [ ] SplitMix64、山札シャッフル、戦闘ターン、効果解決、状態異常を実装する
-- [ ] 同一 seed + Action 列の再現性を含む JUnit 80 件以上を通す
+- [x] immutable `GameState` と唯一の更新口 `reduce(state, action)` を実装する
+- [x] SplitMix64、山札シャッフル、戦闘ターン、効果解決、状態異常を実装する
+- [x] 同一 seed + Action 列の再現性を含む JUnit 80 件以上を通す（144 件）
 
 ## Phase 2 — コンテンツ
 
