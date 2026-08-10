@@ -21,6 +21,8 @@ public fun reduce(state: GameState, action: Action): GameState {
         is Action.PlayCard -> playCard(clean, action)
         Action.EndTurn -> endTurn(clean)
         is Action.ChooseDraft -> chooseDraft(clean, action)
+        is Action.BeginEvent -> EventResolver.begin(clean, action.eventId)
+        is Action.ChooseEvent -> EventResolver.choose(clean, action.choiceId)
         is Action.Navigate -> navigate(clean, action.screen)
         Action.AbandonRun -> abandon(clean)
     }
@@ -102,11 +104,13 @@ private fun endTurn(state: GameState): GameState {
     if (result.player.hp <= 0) return defeat(result)
     val drawNeeded = (Balance.HAND_SIZE - result.hand.size).coerceAtLeast(0)
     result = EffectResolver.drawCards(result, drawNeeded)
-    return result.copy(
-        energy = Balance.STARTING_ENERGY,
-        turn = result.turn + 1,
-        events = result.events + GameEvent(GameEventKind.TURN_STARTED, amount = result.turn + 1, side = Side.PLAYER),
+    val nextTurn = result.turn + 1
+    result = result.copy(
+        energy = BossRules.playerEnergy(result, nextTurn),
+        turn = nextTurn,
+        events = result.events + GameEvent(GameEventKind.TURN_STARTED, amount = nextTurn, side = Side.PLAYER),
     )
+    return BossRules.applyStartOfPlayerTurn(result)
 }
 
 private fun finishCombat(state: GameState): GameState {

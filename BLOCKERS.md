@@ -9,3 +9,7 @@
 - **代替案 3**: 利用者環境で `./gradlew :core:test :app:assembleDebug` を実行し、そのログを照合する。
 
 Phase 1 の完了条件は拒否前の `:core:test` 144/144 成功で満たした。Android 回帰ビルドは Phase 5 の完成判定まで未確認として保持する。
+
+### Phase 2 への影響
+
+サンドボックス内だけで使える Gradle 配布物と共有 read-only 依存キャッシュも構成したが、環境 ACL が Gradle 自身の JAR close を `AccessDeniedException` で拒否し、Kotlin コンパイル前に停止した。PowerShell による構造監査では、プレイヤーカード 100、敵カード 16、重複 ID 0、敵デッキ参照切れ 0、レリック 40、イベントのカード/レリック参照切れ 0 を確認した。JUnit の実行確認は GitHub Actions または実行枠復旧後まで保留する。

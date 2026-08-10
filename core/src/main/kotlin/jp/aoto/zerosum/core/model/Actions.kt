@@ -21,6 +21,12 @@ public sealed interface Action {
     /** Chooses one card from the current five-card draft. */
     public data class ChooseDraft(val instanceId: Long) : Action
 
+    /** Opens a catalog event without resolving a branch. */
+    public data class BeginEvent(val eventId: String) : Action
+
+    /** Resolves one legal branch of the current event. */
+    public data class ChooseEvent(val choiceId: String) : Action
+
     /** Opens a core-owned screen without changing the run. */
     public data class Navigate(val screen: Screen) : Action
 

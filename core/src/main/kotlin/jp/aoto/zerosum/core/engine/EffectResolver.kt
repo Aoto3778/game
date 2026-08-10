@@ -3,6 +3,7 @@ package jp.aoto.zerosum.core.engine
 import jp.aoto.zerosum.core.content.GameCatalog
 import jp.aoto.zerosum.core.model.CardDefinition
 import jp.aoto.zerosum.core.model.CardInstance
+import jp.aoto.zerosum.core.model.BossRule
 import jp.aoto.zerosum.core.model.CombatantState
 import jp.aoto.zerosum.core.model.Effect
 import jp.aoto.zerosum.core.model.EffectCondition
@@ -66,7 +67,16 @@ public object EffectResolver {
         side: Side,
         definition: CardDefinition,
     ): GameState {
-        val amount = scaledAmount(state, effect, side).coerceAtLeast(0)
+        val bossBonus = if (
+            side == Side.ENEMY &&
+            effect.kind == EffectKind.DAMAGE &&
+            state.enemy?.bossRule == BossRule.ACCUMULATOR
+        ) {
+            state.enemyPool.size / 4
+        } else {
+            0
+        }
+        val amount = (scaledAmount(state, effect, side) + bossBonus).coerceAtLeast(0)
         val target = targetSide(effect, side)
         return when (effect.kind) {
             EffectKind.DAMAGE -> dealDamage(state, side, target, amount, effect.hits, definition.id)

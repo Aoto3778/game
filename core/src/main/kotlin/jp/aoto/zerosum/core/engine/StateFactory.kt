@@ -2,6 +2,7 @@ package jp.aoto.zerosum.core.engine
 
 import jp.aoto.zerosum.core.content.GameCatalog
 import jp.aoto.zerosum.core.model.CardInstance
+import jp.aoto.zerosum.core.model.BossRule
 import jp.aoto.zerosum.core.model.CombatantState
 import jp.aoto.zerosum.core.model.EnemyState
 import jp.aoto.zerosum.core.model.GameEvent
@@ -39,8 +40,12 @@ public object StateFactory {
     public fun beginCombat(state: GameState, enemyId: String): GameState {
         val enemyDefinition = GameCatalog.enemy(enemyId)
         var nextId = state.nextInstanceId
-        val baseCards = enemyDefinition.baseDeck.map { definitionId ->
-            CardInstance(nextId++, definitionId)
+        val baseCards = if (enemyDefinition.bossRule == BossRule.MIRROR) {
+            state.playerDeck.map { original ->
+                CardInstance(nextId++, original.definitionId, original.upgraded)
+            }
+        } else {
+            enemyDefinition.baseDeck.map { definitionId -> CardInstance(nextId++, definitionId) }
         }
         val selected = EnemyAi.selectPoolCards(
             pool = state.enemyPool,
@@ -60,7 +65,7 @@ public object StateFactory {
         )
         val shuffled = SplitMix64.shuffle(state.rngState, state.playerDeck)
         val drawCount = minOf(Balance.HAND_SIZE, shuffled.value.size)
-        return state.copy(
+        val combat = state.copy(
             rngState = shuffled.state,
             nextInstanceId = nextId,
             screen = Screen.COMBAT,
@@ -74,6 +79,6 @@ public object StateFactory {
             draft = emptyList(),
             events = listOf(GameEvent(GameEventKind.TURN_STARTED, amount = 1, side = Side.PLAYER)),
         )
+        return BossRules.applyStartOfPlayerTurn(combat)
     }
 }
-

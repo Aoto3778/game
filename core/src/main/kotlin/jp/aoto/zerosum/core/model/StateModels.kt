@@ -74,8 +74,8 @@ public data class GameState(
     val relicIds: List<String> = emptyList(),
     val enemy: EnemyState? = null,
     val draft: List<CardInstance> = emptyList(),
+    val currentEventId: String? = null,
     val lastPlayedDefinitionId: String? = null,
     val events: List<GameEvent> = emptyList(),
     val stats: RunStats = RunStats(),
 )
-

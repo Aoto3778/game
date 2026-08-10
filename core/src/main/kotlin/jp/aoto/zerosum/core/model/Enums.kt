@@ -85,6 +85,53 @@ public enum class EnemyTier { NORMAL, ELITE, BOSS }
 @Serializable
 public enum class BossRule { NONE, SYNCHRONIZER, ACCUMULATOR, MIRROR, ZERO }
 
+/** Relic drop rarity. */
+@Serializable
+public enum class RelicRarity { COMMON, UNCOMMON, RARE, BOSS }
+
+/** Reducer hook represented by a relic definition. */
+@Serializable
+public enum class RelicEffect {
+    START_BLOCK,
+    START_ENERGY,
+    DRAW_BONUS,
+    DAMAGE_BONUS,
+    HEAL_AFTER_COMBAT,
+    MAX_HP,
+    SEIZE_AFTER_DRAFT,
+    GOLD_GAIN,
+    FIRST_TURN_OUTPUT,
+    START_INTERRUPT,
+    SHOCK_BONUS,
+    LOW_HP_BLOCK,
+    RETAIN_BLOCK,
+    COST_REDUCTION,
+    POOL_TAKE_REDUCTION,
+    REVIVE,
+    UPGRADE_REWARD,
+    EVENT_HEAL,
+    BOSS_DAMAGE,
+    TURN_HEAL,
+}
+
+/** Atomic result applied by an event choice. */
+@Serializable
+public enum class EventOutcomeKind {
+    HP_DELTA,
+    MAX_HP_DELTA,
+    GOLD_DELTA,
+    UPGRADE_RANDOM_CARD,
+    REMOVE_RANDOM_CARD,
+    ADD_CARD,
+    BURN_POOL,
+    ADD_RELIC,
+    NOTHING,
+}
+
+/** Optional gate controlling whether an event choice is legal. */
+@Serializable
+public enum class EventRequirement { NONE, MIN_HP, MIN_GOLD, MIN_POOL, MAX_POOL }
+
 /** Stable event kinds for animation and replay inspection. */
 @Serializable
 public enum class GameEventKind {
@@ -100,5 +147,5 @@ public enum class GameEventKind {
     VICTORY,
     DEFEAT,
     INVALID_ACTION,
+    EVENT_RESOLVED,
 }
-

@@ -48,7 +48,47 @@ public data class EnemyDefinition(
     val tier: EnemyTier,
     val baseHp: Int,
     val baseDeck: List<String>,
+    val act: Int = 1,
     val bossRule: BossRule = BossRule.NONE,
     val aiProfile: String = "balanced",
 )
 
+/** Static relic data; one reducer hook plus a tunable amount. */
+@Serializable
+public data class RelicDefinition(
+    val id: String,
+    val nameKey: String,
+    val descriptionKey: String,
+    val rarity: RelicRarity,
+    val effect: RelicEffect,
+    val amount: Int,
+)
+
+/** One atomic consequence of selecting an event branch. */
+@Serializable
+public data class EventOutcome(
+    val kind: EventOutcomeKind,
+    val amount: Int = 0,
+    val contentId: String? = null,
+)
+
+/** One selectable event branch and its explicit tradeoff. */
+@Serializable
+public data class EventChoice(
+    val id: String,
+    val labelKey: String,
+    val outcomes: List<EventOutcome>,
+    val requirement: EventRequirement = EventRequirement.NONE,
+    val requirementAmount: Int = 0,
+)
+
+/** Static branching event content. */
+@Serializable
+public data class EventDefinition(
+    val id: String,
+    val titleKey: String,
+    val bodyKey: String,
+    val choices: List<EventChoice>,
+    val actMin: Int = 1,
+    val actMax: Int = 3,
+)
