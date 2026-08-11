@@ -12,6 +12,9 @@ public sealed interface Action {
     /** Enters combat with a catalog enemy. */
     public data class BeginCombat(val enemyId: String) : Action
 
+    /** Selects one currently reachable node from the act map. */
+    public data class SelectMapNode(val nodeId: String) : Action
+
     /** Plays a card from the player's current hand. */
     public data class PlayCard(val instanceId: Long) : Action
 

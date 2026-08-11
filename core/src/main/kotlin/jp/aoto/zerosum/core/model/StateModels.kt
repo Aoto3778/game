@@ -48,6 +48,17 @@ public data class RunStats(
     val turns: Int = 0,
 )
 
+/** One immutable node in the deterministic act map. */
+@Serializable
+public data class MapNode(
+    val id: String,
+    val type: MapNodeType,
+    val contentId: String? = null,
+    val row: Int,
+    val lane: Int,
+    val connections: List<String> = emptyList(),
+)
+
 /** Entire serializable game state; every field participates in replay equality. */
 @Serializable
 public data class GameState(
@@ -61,6 +72,9 @@ public data class GameState(
     val runStatus: RunStatus = RunStatus.NOT_STARTED,
     val act: Int = 1,
     val nodeIndex: Int = 0,
+    val mapNodes: List<MapNode> = emptyList(),
+    val availableNodeIds: List<String> = emptyList(),
+    val currentNodeId: String? = null,
     val gold: Int = 80,
     val player: CombatantState = CombatantState(hp = 72, maxHp = 72),
     val energy: Int = 3,

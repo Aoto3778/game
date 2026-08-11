@@ -18,6 +18,7 @@ public fun reduce(state: GameState, action: Action): GameState {
     return when (action) {
         is Action.StartRun -> startRun(clean, action)
         is Action.BeginCombat -> beginCombat(clean, action)
+        is Action.SelectMapNode -> RunMap.select(clean, action.nodeId)
         is Action.PlayCard -> playCard(clean, action)
         Action.EndTurn -> endTurn(clean)
         is Action.ChooseDraft -> chooseDraft(clean, action)
@@ -144,7 +145,7 @@ private fun chooseDraft(state: GameState, action: Action.ChooseDraft): GameState
     val chosen = state.draft.firstOrNull { it.instanceId == action.instanceId }
         ?: return state.invalid(action.instanceId.toString())
     val denied = state.draft.filterNot { it.instanceId == chosen.instanceId }
-    return state.copy(
+    val drafted = state.copy(
         screen = Screen.MAP,
         playerDeck = state.playerDeck + chosen,
         enemyPool = state.enemyPool + denied,
@@ -152,6 +153,7 @@ private fun chooseDraft(state: GameState, action: Action.ChooseDraft): GameState
         nodeIndex = state.nodeIndex + 1,
         stats = state.stats.copy(draftsCompleted = state.stats.draftsCompleted + 1),
     )
+    return RunMap.completeSelectedNode(drafted)
 }
 
 private fun navigate(state: GameState, destination: Screen): GameState {
@@ -160,7 +162,7 @@ private fun navigate(state: GameState, destination: Screen): GameState {
     return when {
         destination in permitted -> state.copy(screen = destination)
         destination == returnScreen -> state.copy(screen = destination)
-        state.runStatus == RunStatus.NOT_STARTED && destination == Screen.TITLE -> state
+        state.runStatus == RunStatus.NOT_STARTED && destination == Screen.TITLE -> state.copy(screen = Screen.TITLE)
         else -> state.invalid(destination.name)
     }
 }
@@ -171,11 +173,12 @@ private fun rest(state: GameState): GameState {
     }
     val amount = (state.player.maxHp * Balance.REST_HEAL_PERCENT) / 100
     val healed = minOf(state.player.maxHp, state.player.hp + amount)
-    return state.copy(
+    val rested = state.copy(
         player = state.player.copy(hp = healed),
         nodeIndex = state.nodeIndex + 1,
         events = state.events + GameEvent(GameEventKind.HEAL, "rest", healed - state.player.hp, Side.PLAYER),
     )
+    return RunMap.completeSelectedNode(rested)
 }
 
 private fun completeAct(state: GameState): GameState {
@@ -185,7 +188,7 @@ private fun completeAct(state: GameState): GameState {
     return if (state.act >= 3) {
         state.copy(runStatus = RunStatus.WON, screen = Screen.RESULT)
     } else {
-        state.copy(act = state.act + 1, nodeIndex = 0)
+        RunMap.startAct(state.copy(act = state.act + 1, nodeIndex = 0))
     }
 }
 

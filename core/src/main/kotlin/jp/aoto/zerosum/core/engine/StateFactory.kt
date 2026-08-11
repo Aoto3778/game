@@ -22,7 +22,7 @@ public object StateFactory {
         val hp = Balance.startingHp(heroClass)
         val ids = List(5) { "strike" } + List(4) { "guard" } + "cycle"
         val deck = ids.mapIndexed { index, id -> CardInstance(index + 1L, id) }
-        return GameState(
+        return RunMap.startAct(GameState(
             seed = seed,
             rngState = seed,
             nextInstanceId = deck.size + 1L,
@@ -33,7 +33,7 @@ public object StateFactory {
             gold = Balance.STARTING_GOLD,
             player = CombatantState(hp = hp, maxHp = hp),
             playerDeck = deck,
-        )
+        ))
     }
 
     /** Builds an encounter, selects enemy-pool cards, shuffles, and draws five. */

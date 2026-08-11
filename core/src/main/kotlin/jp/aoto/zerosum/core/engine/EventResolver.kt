@@ -41,10 +41,11 @@ public object EventResolver {
         } else {
             result.copy(screen = Screen.MAP, nodeIndex = result.nodeIndex + 1)
         }
-        return finished.copy(
+        val recorded = finished.copy(
             currentEventId = null,
             events = finished.events + GameEvent(GameEventKind.EVENT_RESOLVED, "$eventId:$choiceId", side = Side.PLAYER),
         )
+        return RunMap.completeSelectedNode(recorded)
     }
 
     private fun requirementMet(state: GameState, choice: EventChoice): Boolean = when (choice.requirement) {

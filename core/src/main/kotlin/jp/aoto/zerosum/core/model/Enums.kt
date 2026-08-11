@@ -10,6 +10,10 @@ public enum class HeroClass { CONDUCTOR, BREAKER, RESOLVER }
 @Serializable
 public enum class Screen { TITLE, MAP, COMBAT, DRAFT, DECK, EVENT, RESULT, SETTINGS, STATS }
 
+/** Node categories rendered by the branching run map. */
+@Serializable
+public enum class MapNodeType { NORMAL, ELITE, EVENT, REST, MERCHANT, BOSS }
+
 /** Lifetime state of the current run. */
 @Serializable
 public enum class RunStatus { NOT_STARTED, ACTIVE, WON, LOST, ABANDONED }
