@@ -29,6 +29,8 @@ import jp.aoto.zerosum.ui.NeonButton
 import jp.aoto.zerosum.ui.Palette
 import jp.aoto.zerosum.ui.RunHud
 import jp.aoto.zerosum.ui.pretty
+import androidx.compose.ui.res.stringResource
+import jp.aoto.zerosum.R
 
 /** Branching event screen with explicit costs and consequences. */
 @Composable
@@ -44,7 +46,7 @@ public fun EventScreen(state: GameState, dispatch: (Action) -> Unit) {
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(pretty(event.id), color = Palette.Amber, fontSize = 24.sp, fontWeight = FontWeight.Black)
-                Text("Every branch has a price.", color = Palette.Muted)
+                Text(stringResource(R.string.every_branch_price), color = Palette.Muted)
             }
         }
         Spacer(Modifier.weight(1f))
@@ -58,7 +60,7 @@ public fun EventScreen(state: GameState, dispatch: (Action) -> Unit) {
                 ) { dispatch(Action.ChooseEvent(choice.id)) }
             }
         }
-        Text("Choose carefully — event outcomes are permanent.", Modifier.fillMaxWidth().padding(18.dp), color = Palette.Muted, textAlign = TextAlign.Center)
+        Text(stringResource(R.string.event_warning), Modifier.fillMaxWidth().padding(18.dp), color = Palette.Muted, textAlign = TextAlign.Center)
     }
 }
 

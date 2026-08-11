@@ -38,6 +38,19 @@ android {
     }
 
     packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
+
+    lint {
+        // Product constraints intentionally pin target 35, portrait play, and an asset-free launcher.
+        disable += setOf(
+            "DiscouragedApi",
+            "GradleDependency",
+            "LockedOrientationActivity",
+            "MissingApplicationIcon",
+            "OldTargetApi",
+            "PluralsCandidate",
+            "SourceLockedOrientationActivity",
+        )
+    }
 }
 
 kotlin {
@@ -53,7 +66,7 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
-

@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -44,16 +45,19 @@ import jp.aoto.zerosum.ui.ProceduralCard
 import jp.aoto.zerosum.ui.RunHud
 import jp.aoto.zerosum.ui.pretty
 import kotlinx.coroutines.delay
+import androidx.compose.ui.res.stringResource
+import jp.aoto.zerosum.R
 
 /** Combat screen with drag-to-target play, damage pop, shake, and discard trail. */
 @Composable
-public fun CombatScreen(state: GameState, dispatch: (Action) -> Unit) {
+public fun CombatScreen(state: GameState, dispatch: (Action) -> Unit, reducedMotion: Boolean = false) {
     val shake = remember { Animatable(0f) }
     val popAlpha = remember { Animatable(0f) }
     val popY = remember { Animatable(0f) }
     var dragging by remember { mutableStateOf(false) }
     var popText by remember { mutableStateOf("") }
     var discarded by remember { mutableStateOf<CardInstance?>(null) }
+    var tutorialStep by remember(state.seed) { mutableIntStateOf(if (state.stats.combatsWon == 0 && state.turn == 1) 0 else -1) }
     val discardAlpha = remember { Animatable(0f) }
     LaunchedEffect(state.events) {
         val damage = state.events.lastOrNull { it.kind == GameEventKind.DAMAGE }
@@ -64,7 +68,7 @@ public fun CombatScreen(state: GameState, dispatch: (Action) -> Unit) {
             popY.animateTo(-54f, tween(420))
             popAlpha.animateTo(0f, tween(180))
             if (damage.side?.name == "PLAYER") {
-                repeat(3) {
+                repeat(if (reducedMotion) 1 else 3) {
                     shake.animateTo(12f, tween(28))
                     shake.animateTo(-12f, tween(28))
                 }
@@ -91,13 +95,35 @@ public fun CombatScreen(state: GameState, dispatch: (Action) -> Unit) {
             Modifier.fillMaxWidth().padding(10.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text("ENERGY ${state.energy}", Modifier.weight(.8f).align(Alignment.CenterVertically), color = Palette.Amber, fontSize = 18.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center)
-            NeonButton("END TURN", Modifier.weight(1.2f), accent = Palette.Magenta) { dispatch(Action.EndTurn) }
+            Text(stringResource(R.string.energy, state.energy), Modifier.weight(.8f).align(Alignment.CenterVertically), color = Palette.Amber, fontSize = 18.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center)
+            NeonButton(stringResource(R.string.end_turn), Modifier.weight(1.2f), accent = Palette.Magenta) { dispatch(Action.EndTurn) }
         }
     }
     discarded?.let { card ->
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
             ProceduralCard(card, Modifier.padding(24.dp).size(74.dp, 104.dp).alpha(discardAlpha.value).graphicsLayer { rotationZ = 18f * (1f - discardAlpha.value) }, compact = true)
+        }
+    }
+    if (tutorialStep >= 0) TutorialOverlay(tutorialStep) {
+        tutorialStep = if (tutorialStep >= 2) -1 else tutorialStep + 1
+    }
+}
+
+@Composable
+private fun TutorialOverlay(step: Int, next: () -> Unit) {
+    val copy = when (step) {
+        0 -> stringResource(R.string.guide_drag)
+        1 -> stringResource(R.string.guide_intent)
+        else -> stringResource(R.string.guide_draft)
+    }
+    Box(
+        Modifier.fillMaxSize().background(Palette.Background.copy(alpha = .76f)).padding(24.dp),
+        contentAlignment = Alignment.BottomCenter,
+    ) {
+        Column(Modifier.fillMaxWidth().background(Palette.Surface).padding(18.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(stringResource(R.string.quick_guide, step + 1), color = Palette.Cyan, fontWeight = FontWeight.Black)
+            Text(copy, Modifier.padding(vertical = 14.dp), color = Palette.Text, textAlign = TextAlign.Center)
+            NeonButton(stringResource(if (step == 2) R.string.play else R.string.next), Modifier.fillMaxWidth(), onClick = next)
         }
     }
 }
@@ -119,7 +145,7 @@ private fun EnemyPanel(state: GameState, targeted: Boolean, popText: String, pop
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(pretty(definition.id), color = Palette.Text, fontSize = 20.sp, fontWeight = FontWeight.Black)
             Text("${enemy.actor.hp}/${enemy.actor.maxHp} HP  •  ${enemy.actor.block} BLOCK", color = Palette.Red, fontWeight = FontWeight.Bold)
-            Text("Intent: ${pretty(enemy.intent.definitionId)}", color = Palette.Amber, fontSize = 12.sp)
+            Text(stringResource(R.string.intent, pretty(enemy.intent.definitionId)), color = Palette.Amber, fontSize = 12.sp)
         }
         if (popText.isNotEmpty()) Text(
             popText,
@@ -128,7 +154,7 @@ private fun EnemyPanel(state: GameState, targeted: Boolean, popText: String, pop
             fontSize = 34.sp,
             fontWeight = FontWeight.Black,
         )
-        if (targeted) Text("RELEASE TO TARGET", Modifier.align(Alignment.BottomCenter).padding(8.dp), color = Palette.Red, fontWeight = FontWeight.Bold)
+        if (targeted) Text(stringResource(R.string.release_target), Modifier.align(Alignment.BottomCenter).padding(8.dp), color = Palette.Red, fontWeight = FontWeight.Bold)
     }
 }
 

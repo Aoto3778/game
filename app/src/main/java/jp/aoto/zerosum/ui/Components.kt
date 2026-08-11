@@ -35,6 +35,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import jp.aoto.zerosum.R
 import jp.aoto.zerosum.core.content.GameCatalog
 import jp.aoto.zerosum.core.model.CardClass
 import jp.aoto.zerosum.core.model.CardInstance
@@ -50,9 +52,9 @@ public fun RunHud(state: GameState) {
         Modifier.fillMaxWidth().background(Palette.Surface).padding(horizontal = 14.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Text("ACT ${state.act}  •  ${state.nodeIndex}", color = Palette.Cyan, fontWeight = FontWeight.Bold)
-        Text("HP ${state.player.hp}/${state.player.maxHp}", color = Palette.Red)
-        Text("¤ ${state.gold}", color = Palette.Amber)
+        Text(stringResource(R.string.run_hud, state.act, state.nodeIndex), color = Palette.Cyan, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.hp_hud, state.player.hp, state.player.maxHp), color = Palette.Red)
+        Text(stringResource(R.string.gold_hud, state.gold), color = Palette.Amber)
     }
 }
 

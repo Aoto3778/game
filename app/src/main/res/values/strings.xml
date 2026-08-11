@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ZERO SUM</string>
+    <string name="tagline">SEIZE THE CARD. DENY THE ENEMY.</string>
+    <string name="choose_circuit">CHOOSE YOUR CIRCUIT</string>
+    <string name="hero_conductor">CONDUCTOR • Shock &amp; tempo</string>
+    <string name="hero_breaker">BREAKER • Block &amp; rupture</string>
+    <string name="hero_resolver">RESOLVER • Recursion &amp; control</string>
+    <string name="ascension">ASCENSION %1$d</string>
+    <string name="daily_challenge">DAILY CHALLENGE</string>
+    <string name="settings">SETTINGS</string>
+    <string name="back">BACK</string>
+    <string name="deck">DECK</string>
+    <string name="run_hud">ACT %1$d • %2$d</string>
+    <string name="hp_hud">HP %1$d/%2$d</string>
+    <string name="gold_hud">¤ %1$d</string>
+    <string name="grid_title">THE GRID • %1$d cards in enemy pool</string>
+    <string name="end_turn">END TURN</string>
+    <string name="energy">ENERGY %1$d</string>
+    <string name="release_target">RELEASE TO TARGET</string>
+    <string name="intent">Intent: %1$s</string>
+    <string name="draft_title">TAKE ONE. ARM THE ENEMY WITH FOUR.</string>
+    <string name="draft_hint">Tap a card to lock the zero-sum draft.</string>
+    <string name="draft_pool">Unchosen cards: %1$d → %2$d</string>
+    <string name="your_deck">YOUR DECK • %1$d</string>
+    <string name="enemy_pool">ENEMY POOL %1$d</string>
+    <string name="every_branch_price">Every branch has a price.</string>
+    <string name="event_warning">Choose carefully — event outcomes are permanent.</string>
+    <string name="result_win">CIRCUIT CLOSED</string>
+    <string name="result_loss">CIRCUIT BROKEN</string>
+    <string name="result_win_copy">The enemy received every card you refused — and still lost.</string>
+    <string name="result_loss_copy">The pool remembers every card you surrendered.</string>
+    <string name="run_again">RUN AGAIN</string>
+    <string name="settings_copy">Dark theme is fixed. The grid works offline.</string>
+    <string name="synth_sound">SYNTH SOUND</string>
+    <string name="synth_sound_copy">Realtime waveforms only</string>
+    <string name="haptics">HAPTICS</string>
+    <string name="haptics_copy">Critical hits and selections</string>
+    <string name="reduced_motion">REDUCED MOTION</string>
+    <string name="reduced_motion_copy">Shorten screen shake and trails</string>
+    <string name="abandon_run">ABANDON RUN</string>
+    <string name="stats_achievements">STATISTICS &amp; ACHIEVEMENTS</string>
+    <string name="statistics">STATISTICS</string>
+    <string name="achievements">ACHIEVEMENTS %1$d/30</string>
+    <string name="unlocked">UNLOCKED</string>
+    <string name="locked">LOCKED</string>
+    <string name="quick_guide">QUICK GUIDE %1$d/3</string>
+    <string name="guide_drag">Drag a card upward. Release over the enemy to play it.</string>
+    <string name="guide_intent">The enemy intent is always visible. Build block before ending your turn.</string>
+    <string name="guide_draft">After victory, take one of five cards. The other four become enemy options.</string>
+    <string name="next">NEXT</string>
+    <string name="play">PLAY</string>
 </resources>
-

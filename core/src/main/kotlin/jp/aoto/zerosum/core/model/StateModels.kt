@@ -68,6 +68,7 @@ public data class GameState(
     val nextInstanceId: Long = 1L,
     val heroClass: HeroClass = HeroClass.CONDUCTOR,
     val ascension: Int = 0,
+    val dailyChallenge: Boolean = false,
     val screen: Screen = Screen.TITLE,
     val runStatus: RunStatus = RunStatus.NOT_STARTED,
     val act: Int = 1,

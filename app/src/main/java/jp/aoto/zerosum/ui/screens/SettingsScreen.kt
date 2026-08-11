@@ -28,13 +28,18 @@ import jp.aoto.zerosum.core.model.RunStatus
 import jp.aoto.zerosum.core.model.Screen
 import jp.aoto.zerosum.ui.NeonButton
 import jp.aoto.zerosum.ui.Palette
+import jp.aoto.zerosum.persistence.AppSettings
+import androidx.compose.ui.res.stringResource
+import jp.aoto.zerosum.R
 
 /** Local presentation settings; persistence is added in Phase 5. */
 @Composable
-public fun SettingsScreen(state: GameState, dispatch: (Action) -> Unit) {
-    var sound by remember { mutableStateOf(true) }
-    var haptics by remember { mutableStateOf(true) }
-    var reducedMotion by remember { mutableStateOf(false) }
+public fun SettingsScreen(
+    state: GameState,
+    settings: AppSettings,
+    dispatch: (Action) -> Unit,
+    updateSettings: (AppSettings) -> Unit,
+) {
     Column(Modifier.fillMaxSize().padding(22.dp)) {
         Canvas(Modifier.fillMaxWidth().height(160.dp)) {
             repeat(12) { index ->
@@ -44,20 +49,22 @@ public fun SettingsScreen(state: GameState, dispatch: (Action) -> Unit) {
                 if (index > 0) drawLine(Palette.Muted.copy(alpha = .3f), Offset(size.width * (index - 1) / 11f, size.height * .5f), Offset(x, y), 2f)
             }
         }
-        Text("SETTINGS", color = Palette.Text, fontSize = 28.sp, fontWeight = FontWeight.Black)
-        Text("Dark theme is fixed. The grid works offline.", color = Palette.Muted)
+        Text(stringResource(R.string.settings), color = Palette.Text, fontSize = 28.sp, fontWeight = FontWeight.Black)
+        Text(stringResource(R.string.settings_copy), color = Palette.Muted)
         Spacer(Modifier.height(30.dp))
-        Toggle("SYNTH SOUND", "Realtime waveforms only", sound) { sound = it }
-        Toggle("HAPTICS", "Critical hits and selections", haptics) { haptics = it }
-        Toggle("REDUCED MOTION", "Shorten screen shake and trails", reducedMotion) { reducedMotion = it }
+        Toggle(stringResource(R.string.synth_sound), stringResource(R.string.synth_sound_copy), settings.sound) { updateSettings(settings.copy(sound = it)) }
+        Toggle(stringResource(R.string.haptics), stringResource(R.string.haptics_copy), settings.haptics) { updateSettings(settings.copy(haptics = it)) }
+        Toggle(stringResource(R.string.reduced_motion), stringResource(R.string.reduced_motion_copy), settings.reducedMotion) { updateSettings(settings.copy(reducedMotion = it)) }
         Spacer(Modifier.weight(1f))
         if (state.runStatus == RunStatus.ACTIVE) {
-            NeonButton("ABANDON RUN", Modifier.fillMaxWidth(), accent = Palette.Red) { dispatch(Action.AbandonRun) }
+            NeonButton(stringResource(R.string.abandon_run), Modifier.fillMaxWidth(), accent = Palette.Red) { dispatch(Action.AbandonRun) }
             Spacer(Modifier.height(10.dp))
         }
-        NeonButton("BACK", Modifier.fillMaxWidth()) {
+        NeonButton(stringResource(R.string.back), Modifier.fillMaxWidth()) {
             dispatch(Action.Navigate(if (state.runStatus == RunStatus.NOT_STARTED) Screen.TITLE else if (state.enemy == null) Screen.MAP else Screen.COMBAT))
         }
+        Spacer(Modifier.height(10.dp))
+        NeonButton(stringResource(R.string.stats_achievements), Modifier.fillMaxWidth(), accent = Palette.Green) { dispatch(Action.Navigate(Screen.STATS)) }
     }
 }
 

@@ -17,7 +17,7 @@ import jp.aoto.zerosum.core.rng.SplitMix64
 /** Deterministic constructors for run and encounter state. */
 public object StateFactory {
     /** Creates the ten-card starter deck specified by the design. */
-    public fun newRun(heroClass: HeroClass, seed: Long, ascension: Int): GameState {
+    public fun newRun(heroClass: HeroClass, seed: Long, ascension: Int, dailyChallenge: Boolean = false): GameState {
         require(ascension in 0..20) { "Ascension must be in 0..20: $ascension" }
         val hp = Balance.startingHp(heroClass)
         val ids = List(5) { "strike" } + List(4) { "guard" } + "cycle"
@@ -28,6 +28,7 @@ public object StateFactory {
             nextInstanceId = deck.size + 1L,
             heroClass = heroClass,
             ascension = ascension,
+            dailyChallenge = dailyChallenge,
             screen = Screen.MAP,
             runStatus = RunStatus.ACTIVE,
             gold = Balance.STARTING_GOLD,

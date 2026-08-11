@@ -22,6 +22,8 @@ import jp.aoto.zerosum.core.model.GameState
 import jp.aoto.zerosum.core.model.RunStatus
 import jp.aoto.zerosum.ui.NeonButton
 import jp.aoto.zerosum.ui.Palette
+import androidx.compose.ui.res.stringResource
+import jp.aoto.zerosum.R
 
 /** End-of-run summary and immediate replay entrypoint. */
 @Composable
@@ -36,15 +38,15 @@ public fun ResultScreen(state: GameState, dispatch: (Action) -> Unit) {
                 drawLine(Palette.Red, center - Offset(80f, -80f), center + Offset(80f, -80f), 8f)
             }
         }
-        Text(if (won) "CIRCUIT CLOSED" else "CIRCUIT BROKEN", Modifier.fillMaxWidth(), color = if (won) Palette.Cyan else Palette.Red, fontSize = 30.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center)
-        Text(if (won) "The enemy received every card you refused — and still lost." else "The pool remembers every card you surrendered.", Modifier.fillMaxWidth().padding(12.dp), color = Palette.Muted, textAlign = TextAlign.Center)
+        Text(stringResource(if (won) R.string.result_win else R.string.result_loss), Modifier.fillMaxWidth(), color = if (won) Palette.Cyan else Palette.Red, fontSize = 30.sp, fontWeight = FontWeight.Black, textAlign = TextAlign.Center)
+        Text(stringResource(if (won) R.string.result_win_copy else R.string.result_loss_copy), Modifier.fillMaxWidth().padding(12.dp), color = Palette.Muted, textAlign = TextAlign.Center)
         Row(Modifier.fillMaxWidth().padding(vertical = 22.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
             Stat("TURNS", state.stats.turns)
             Stat("DAMAGE", state.stats.damageDealt)
             Stat("DRAFTS", state.stats.draftsCompleted)
             Stat("ACT", state.act)
         }
-        NeonButton("RUN AGAIN", Modifier.fillMaxWidth(), accent = if (won) Palette.Cyan else Palette.Red) {
+        NeonButton(stringResource(R.string.run_again), Modifier.fillMaxWidth(), accent = if (won) Palette.Cyan else Palette.Red) {
             dispatch(Action.StartRun(state.heroClass, System.currentTimeMillis(), state.ascension))
         }
         Spacer(Modifier.padding(8.dp))

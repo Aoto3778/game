@@ -27,6 +27,8 @@ import jp.aoto.zerosum.core.model.Screen
 import jp.aoto.zerosum.ui.NeonButton
 import jp.aoto.zerosum.ui.Palette
 import jp.aoto.zerosum.ui.RunHud
+import androidx.compose.ui.res.stringResource
+import jp.aoto.zerosum.R
 
 /** Branching act map with procedural paths and tappable nodes. */
 @Composable
@@ -34,7 +36,7 @@ public fun MapScreen(state: GameState, dispatch: (Action) -> Unit) {
     Column(Modifier.fillMaxSize()) {
         RunHud(state)
         Text(
-            "THE GRID  •  ${state.enemyPool.size} cards in enemy pool",
+            stringResource(R.string.grid_title, state.enemyPool.size),
             Modifier.fillMaxWidth().padding(12.dp),
             color = Palette.Text,
             fontWeight = FontWeight.Bold,
@@ -45,8 +47,8 @@ public fun MapScreen(state: GameState, dispatch: (Action) -> Unit) {
             Modifier.fillMaxWidth().padding(12.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            NeonButton("DECK", Modifier.weight(1f), accent = Palette.Green) { dispatch(Action.Navigate(Screen.DECK)) }
-            NeonButton("SETTINGS", Modifier.weight(1f), accent = Palette.Muted) { dispatch(Action.Navigate(Screen.SETTINGS)) }
+            NeonButton(stringResource(R.string.deck), Modifier.weight(1f), accent = Palette.Green) { dispatch(Action.Navigate(Screen.DECK)) }
+            NeonButton(stringResource(R.string.settings), Modifier.weight(1f), accent = Palette.Muted) { dispatch(Action.Navigate(Screen.SETTINGS)) }
         }
     }
 }

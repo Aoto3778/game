@@ -7,6 +7,7 @@ public sealed interface Action {
         val heroClass: HeroClass,
         val seed: Long,
         val ascension: Int = 0,
+        val dailyChallenge: Boolean = false,
     ) : Action
 
     /** Enters combat with a catalog enemy. */

@@ -26,14 +26,16 @@ import jp.aoto.zerosum.core.model.GameState
 import jp.aoto.zerosum.ui.Palette
 import jp.aoto.zerosum.ui.ProceduralCard
 import jp.aoto.zerosum.ui.RunHud
+import androidx.compose.ui.res.stringResource
+import jp.aoto.zerosum.R
 
 /** Five-way zero-sum draft: one card joins the deck and four arm enemies. */
 @Composable
 public fun DraftScreen(state: GameState, dispatch: (Action) -> Unit) {
     Column(Modifier.fillMaxSize()) {
         RunHud(state)
-        Text("TAKE ONE. ARM THE ENEMY WITH FOUR.", Modifier.fillMaxWidth().padding(top = 18.dp), color = Palette.Text, fontWeight = FontWeight.Black, textAlign = TextAlign.Center)
-        Text("Tap a card to lock the zero-sum draft.", Modifier.fillMaxWidth().padding(6.dp), color = Palette.Muted, textAlign = TextAlign.Center)
+        Text(stringResource(R.string.draft_title), Modifier.fillMaxWidth().padding(top = 18.dp), color = Palette.Text, fontWeight = FontWeight.Black, textAlign = TextAlign.Center)
+        Text(stringResource(R.string.draft_hint), Modifier.fillMaxWidth().padding(6.dp), color = Palette.Muted, textAlign = TextAlign.Center)
         Spacer(Modifier.weight(1f))
         Row(
             Modifier.fillMaxWidth().height(310.dp).horizontalScroll(rememberScrollState()).padding(12.dp),
@@ -42,7 +44,7 @@ public fun DraftScreen(state: GameState, dispatch: (Action) -> Unit) {
         ) {
             state.draft.forEach { card -> DraftChoice(card) { dispatch(Action.ChooseDraft(card.instanceId)) } }
         }
-        Text("Unchosen cards: ${state.enemyPool.size} → ${state.enemyPool.size + 4}", Modifier.fillMaxWidth().padding(18.dp), color = Palette.Red, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.draft_pool, state.enemyPool.size, state.enemyPool.size + 4), Modifier.fillMaxWidth().padding(18.dp), color = Palette.Red, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold)
     }
 }
 

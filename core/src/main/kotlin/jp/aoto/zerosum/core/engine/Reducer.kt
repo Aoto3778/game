@@ -37,7 +37,7 @@ public fun replay(initial: GameState, actions: Iterable<Action>): GameState =
 
 private fun startRun(state: GameState, action: Action.StartRun): GameState {
     if (action.ascension !in 0..20) return state.invalid("ascension")
-    return StateFactory.newRun(action.heroClass, action.seed, action.ascension)
+    return StateFactory.newRun(action.heroClass, action.seed, action.ascension, action.dailyChallenge)
 }
 
 private fun beginCombat(state: GameState, action: Action.BeginCombat): GameState {

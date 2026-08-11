@@ -22,13 +22,15 @@ import jp.aoto.zerosum.ui.NeonButton
 import jp.aoto.zerosum.ui.Palette
 import jp.aoto.zerosum.ui.ProceduralCard
 import jp.aoto.zerosum.ui.RunHud
+import androidx.compose.ui.res.stringResource
+import jp.aoto.zerosum.R
 
 /** Read-only deck and denied-card pool browser. */
 @Composable
 public fun DeckScreen(state: GameState, dispatch: (Action) -> Unit) {
     Column(Modifier.fillMaxSize()) {
         RunHud(state)
-        Text("YOUR DECK  •  ${state.playerDeck.size}", Modifier.padding(12.dp), color = Palette.Green, fontWeight = FontWeight.Black)
+        Text(stringResource(R.string.your_deck, state.playerDeck.size), Modifier.padding(12.dp), color = Palette.Green, fontWeight = FontWeight.Black)
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = Modifier.weight(1f).fillMaxWidth().padding(horizontal = 8.dp),
@@ -40,8 +42,8 @@ public fun DeckScreen(state: GameState, dispatch: (Action) -> Unit) {
             }
         }
         Row(Modifier.fillMaxWidth().padding(10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            NeonButton("ENEMY POOL ${state.enemyPool.size}", Modifier.weight(1f), accent = Palette.Red) {}
-            NeonButton("BACK", Modifier.weight(1f)) { dispatch(Action.Navigate(if (state.enemy == null) Screen.MAP else Screen.COMBAT)) }
+            NeonButton(stringResource(R.string.enemy_pool, state.enemyPool.size), Modifier.weight(1f), accent = Palette.Red) {}
+            NeonButton(stringResource(R.string.back), Modifier.weight(1f)) { dispatch(Action.Navigate(if (state.enemy == null) Screen.MAP else Screen.COMBAT)) }
         }
     }
 }
