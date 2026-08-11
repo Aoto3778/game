@@ -6,7 +6,7 @@
 
 - [x] `:core:test` が成功し、テスト数150件以上（378件、失敗0）
 - [x] `:app:assembleDebug` が成功
-- [ ] GitHub Actions の全ジョブが成功し、APKがArtifactsに存在
+- [x] GitHub Actions run 31450756286 の全jobが成功し、APK artifactを署名／metadata検証
 - [x] `:core` / `:sim` の Android／AndroidX import が0件
 - [x] Kotlinソースの `!!` が0件
 - [x] AndroidManifest に `INTERNET` 権限がない

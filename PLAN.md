@@ -43,4 +43,5 @@
 - [x] AudioTrack合成音、ハプティクス、設定永続化
 - [x] 日本語／英語リソース分離、初回ガイド、演出軽減設定
 - [x] README、LICENSE、lint/test/build、APK署名／メタデータ検証
-- [ ] Phase 5コミット、GitHub push、配布物作成
+- [x] Phase 5コミットを空リポジトリの初期 `main` としてpush
+- [ ] GitHub Releaseへ検証済みdebug APKを公開
