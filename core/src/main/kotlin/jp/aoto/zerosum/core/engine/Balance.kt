@@ -10,6 +10,7 @@ public object Balance {
     public const val STARTING_GOLD: Int = 80
     public const val DRAFT_SIZE: Int = 5
     public const val OVERLOAD_PERCENT_PER_STACK: Int = 25
+    public const val REST_HEAL_PERCENT: Int = 20
 
     /** Starting HP by hero class. */
     public fun startingHp(heroClass: HeroClass): Int = when (heroClass) {

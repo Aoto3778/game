@@ -26,8 +26,8 @@ internal object BreakerCards {
         card("confiscate", CardClass.BREAKER, CardRarity.RARE, 1, listOf(seize(1), block(4)), listOf(seize(1), block(8)), seizure),
         // 相手を過負荷にしつつ次効果を遮断する準備札。
         card("lockout", CardClass.BREAKER, CardRarity.UNCOMMON, 1, listOf(status(Status.OVERLOAD, 1), status(Status.INTERRUPT, 1, true)), listOf(status(Status.OVERLOAD, 2), status(Status.INTERRUPT, 1, true)), skill),
-        // 6火力+遮断は攻防両立のため2コスト。
-        card("circuit_breaker", CardClass.BREAKER, CardRarity.UNCOMMON, 2, listOf(damage(6), status(Status.INTERRUPT, 1, true)), listOf(damage(10), status(Status.INTERRUPT, 1, true)), attack),
+        // 遮断の寄与が高いため火力を4→7へ抑える。
+        card("circuit_breaker", CardClass.BREAKER, CardRarity.UNCOMMON, 2, listOf(damage(4), status(Status.INTERRUPT, 1, true)), listOf(damage(7), status(Status.INTERRUPT, 1, true)), attack),
         // 現在ブロックを火力へ転換し、先積みを報酬化。
         card("hard_trip", CardClass.BREAKER, CardRarity.RARE, 2, listOf(damage(0, scaling = Scaling.SELF_BLOCK)), listOf(damage(4, scaling = Scaling.SELF_BLOCK)), attack),
         // 8ブロック+押収は消尽で反復を防止。
@@ -60,8 +60,8 @@ internal object BreakerCards {
         card("containment", CardClass.BREAKER, CardRarity.RARE, 2, listOf(status(Status.INTERRUPT, 2, true), block(6)), listOf(status(Status.INTERRUPT, 2, true), block(11)), skill),
         // 押収2と最大HP2を3コスト消尽の長期投資にする。
         card("eminent_domain", CardClass.BREAKER, CardRarity.RARE, 3, listOf(seize(2), maxHp(2)), listOf(seize(3), maxHp(2)), seizure),
-        // 敵プール10枚以上で14→21火力となる警告札。
-        card("final_notice", CardClass.BREAKER, CardRarity.RARE, 1, listOf(damage(14, condition = EffectCondition.IF_ENEMY_POOL_AT_LEAST, threshold = 10)), listOf(damage(21, condition = EffectCondition.IF_ENEMY_POOL_AT_LEAST, threshold = 10)), attack),
+        // 敵プール10枚以上の高寄与を10→15火力へ抑える。
+        card("final_notice", CardClass.BREAKER, CardRarity.RARE, 1, listOf(damage(10, condition = EffectCondition.IF_ENEMY_POOL_AT_LEAST, threshold = 10)), listOf(damage(15, condition = EffectCondition.IF_ENEMY_POOL_AT_LEAST, threshold = 10)), attack),
         // 20ブロック+遮断1を3コストの防御到達点とする。
         card("iron_law", CardClass.BREAKER, CardRarity.RARE, 3, listOf(block(20), status(Status.INTERRUPT, 1, true)), listOf(block(28), status(Status.INTERRUPT, 1, true)), skill),
     )

@@ -27,6 +27,12 @@ public sealed interface Action {
     /** Resolves one legal branch of the current event. */
     public data class ChooseEvent(val choiceId: String) : Action
 
+    /** Recovers twenty percent maximum HP at a rest node. */
+    public data object Rest : Action
+
+    /** Advances to the next act or marks the third act complete. */
+    public data object CompleteAct : Action
+
     /** Opens a core-owned screen without changing the run. */
     public data class Navigate(val screen: Screen) : Action
 

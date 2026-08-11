@@ -1,6 +1,8 @@
 .gradle/
 .gradle-sandbox/
 .gradle-local-dist/
+.kotlinc-libs/
+.manual-build/
 **/build/
 local.properties
 .idea/

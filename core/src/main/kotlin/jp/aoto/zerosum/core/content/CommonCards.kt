@@ -17,8 +17,8 @@ internal object CommonCards {
         card("strike", CardClass.COMMON, CardRarity.STARTER, 1, listOf(damage(6)), listOf(damage(9)), attack),
         // 5→8 は基準攻撃をほぼ相殺する防御量。
         card("guard", CardClass.COMMON, CardRarity.STARTER, 1, listOf(block(5)), listOf(block(8)), skill),
-        // 初期デッキの循環を壊さない2枚ドロー。
-        card("cycle", CardClass.COMMON, CardRarity.STARTER, 1, listOf(draw(2)), listOf(draw(3)), skill),
+        // 初期循環札はエナジーを返し、追加採用でもテンポを失わない。
+        card("cycle", CardClass.COMMON, CardRarity.STARTER, 1, listOf(draw(2), energy(1)), listOf(draw(3), energy(1)), skill),
         // 希少回復は消尽と引き換えに5→8。
         card("triage", CardClass.COMMON, CardRarity.RARE, 1, listOf(heal(5)), listOf(heal(8)), exhaust),
         // 継承の柔軟性を3ブロック相当に評価。

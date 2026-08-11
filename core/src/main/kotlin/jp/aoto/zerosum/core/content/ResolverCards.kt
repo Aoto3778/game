@@ -28,24 +28,24 @@ internal object ResolverCards {
         card("archive", CardClass.RESOLVER, CardRarity.COMMON, 1, listOf(draw(1)), listOf(draw(2)), retain),
         // 手札枚数を防御へ変え、保持判断を報酬化。
         card("align", CardClass.RESOLVER, CardRarity.COMMON, 1, listOf(block(1, Scaling.HAND_SIZE)), listOf(block(4, Scaling.HAND_SIZE)), skill),
-        // 3枚見て2枚捨てるため実質+1枚の選別。
-        card("reorder", CardClass.RESOLVER, CardRarity.COMMON, 1, listOf(draw(3), discard(2)), listOf(draw(4), discard(2)), skill),
+        // 4枚見て1枚捨て、低寄与だった選別札を実質+3枚へ強化。
+        card("reorder", CardClass.RESOLVER, CardRarity.COMMON, 1, listOf(draw(4), discard(1)), listOf(draw(5), discard(1)), skill),
         // 回収1を継承できる代わりに2コスト。
         card("memory_loop", CardClass.RESOLVER, CardRarity.UNCOMMON, 2, listOf(returnDiscard(1)), listOf(returnDiscard(2)), retain),
         // 手札枚数を火力化し、基礎2を加える。
         card("stack_trace", CardClass.RESOLVER, CardRarity.UNCOMMON, 1, listOf(damage(2, scaling = Scaling.HAND_SIZE)), listOf(damage(5, scaling = Scaling.HAND_SIZE)), attack),
         // 5火力+2ドロー-1捨てを2コストの攻撃交換札にする。
         card("handoff", CardClass.RESOLVER, CardRarity.UNCOMMON, 2, listOf(damage(5), draw(2), discard(1)), listOf(damage(8), draw(2), discard(1)), attack),
-        // 非消尽コピーは2コストで無限連鎖を抑える。
-        card("memoize", CardClass.RESOLVER, CardRarity.RARE, 2, listOf(copyLast(1)), listOf(copyLast(1), draw(1)), skill),
+        // 非消尽コピーは1コスト、強化で無料化して再生札を使える余地を残す。
+        card("memoize", CardClass.RESOLVER, CardRarity.RARE, 1, listOf(copyLast(1)), listOf(copyLast(1), draw(1)), skill, upgradedCost = 0),
         // 手札5枚以上なら9→14火力となる標準フィニッシャー。
         card("resolve", CardClass.RESOLVER, CardRarity.UNCOMMON, 1, listOf(damage(9, condition = EffectCondition.IF_HAND_AT_LEAST, threshold = 5)), listOf(damage(14, condition = EffectCondition.IF_HAND_AT_LEAST, threshold = 5)), attack),
         // 手札5枚以上で10→15ブロックを得る防御対。
         card("checksum", CardClass.RESOLVER, CardRarity.UNCOMMON, 1, listOf(block(10, condition = EffectCondition.IF_HAND_AT_LEAST, threshold = 5)), listOf(block(15, condition = EffectCondition.IF_HAND_AT_LEAST, threshold = 5)), skill),
         // 小回復と回収を消尽にし、持久無限化を防ぐ。
         card("rollback", CardClass.RESOLVER, CardRarity.RARE, 1, listOf(heal(3), returnDiscard(1)), listOf(heal(5), returnDiscard(1)), exhaust),
-        // 直前札2枚コピーは2コスト消尽の瞬間展開。
-        card("fork", CardClass.RESOLVER, CardRarity.RARE, 2, listOf(copyLast(2)), listOf(copyLast(2), energy(1)), exhaust),
+        // 直前札2枚コピー後に1→2エナジーを戻し、生成札を使えるようにする。
+        card("fork", CardClass.RESOLVER, CardRarity.RARE, 2, listOf(copyLast(2), energy(1)), listOf(copyLast(2), energy(2)), exhaust),
         // 3ヒットそれぞれに手札枚数が乗る高相乗札。
         card("converge", CardClass.RESOLVER, CardRarity.RARE, 3, listOf(damage(1, 3, Scaling.HAND_SIZE)), listOf(damage(2, 3, Scaling.HAND_SIZE)), attack),
         // コピー+ドローを1回限りにして0コスト連鎖を許容。
@@ -54,10 +54,10 @@ internal object ResolverCards {
         card("garbage_collect", CardClass.RESOLVER, CardRarity.UNCOMMON, 0, listOf(discard(2), energy(2)), listOf(discard(1), energy(2)), skill),
         // 無料2ドローは消尽、強化で3ドロー。
         card("cache_hit", CardClass.RESOLVER, CardRarity.UNCOMMON, 0, listOf(draw(2)), listOf(draw(3)), exhaust),
-        // 手札枚数防御を継承可能にするため2コスト。
-        card("fixed_point", CardClass.RESOLVER, CardRarity.RARE, 2, listOf(block(2, Scaling.HAND_SIZE)), listOf(block(5, Scaling.HAND_SIZE)), retain),
-        // 8ブロック+遮断1でコンボ開始を守る。
-        card("invariant", CardClass.RESOLVER, CardRarity.UNCOMMON, 2, listOf(block(8), status(Status.INTERRUPT, 1, true)), listOf(block(12), status(Status.INTERRUPT, 1, true)), skill),
+        // 低採用・低寄与を直すため1コストで4→7+手札枚数ブロック。
+        card("fixed_point", CardClass.RESOLVER, CardRarity.RARE, 1, listOf(block(4, Scaling.HAND_SIZE)), listOf(block(7, Scaling.HAND_SIZE)), retain),
+        // 遮断の高寄与を踏まえ、防御を6→9へ抑える。
+        card("invariant", CardClass.RESOLVER, CardRarity.UNCOMMON, 2, listOf(block(6), status(Status.INTERRUPT, 1, true)), listOf(block(9), status(Status.INTERRUPT, 1, true)), skill),
         // 5火力後に捨て札1枚を戻し、攻撃列を延長。
         card("tail_call", CardClass.RESOLVER, CardRarity.COMMON, 1, listOf(damage(5), returnDiscard(1)), listOf(damage(8), returnDiscard(1)), attack),
         // 手札枚数を直接火力化する2コストの単発札。

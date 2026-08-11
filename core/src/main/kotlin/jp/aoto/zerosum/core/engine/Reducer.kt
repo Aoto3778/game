@@ -23,6 +23,8 @@ public fun reduce(state: GameState, action: Action): GameState {
         is Action.ChooseDraft -> chooseDraft(clean, action)
         is Action.BeginEvent -> EventResolver.begin(clean, action.eventId)
         is Action.ChooseEvent -> EventResolver.choose(clean, action.choiceId)
+        Action.Rest -> rest(clean)
+        Action.CompleteAct -> completeAct(clean)
         is Action.Navigate -> navigate(clean, action.screen)
         Action.AbandonRun -> abandon(clean)
     }
@@ -160,6 +162,30 @@ private fun navigate(state: GameState, destination: Screen): GameState {
         destination == returnScreen -> state.copy(screen = destination)
         state.runStatus == RunStatus.NOT_STARTED && destination == Screen.TITLE -> state
         else -> state.invalid(destination.name)
+    }
+}
+
+private fun rest(state: GameState): GameState {
+    if (state.runStatus != RunStatus.ACTIVE || state.screen != Screen.MAP || state.enemy != null) {
+        return state.invalid("rest")
+    }
+    val amount = (state.player.maxHp * Balance.REST_HEAL_PERCENT) / 100
+    val healed = minOf(state.player.maxHp, state.player.hp + amount)
+    return state.copy(
+        player = state.player.copy(hp = healed),
+        nodeIndex = state.nodeIndex + 1,
+        events = state.events + GameEvent(GameEventKind.HEAL, "rest", healed - state.player.hp, Side.PLAYER),
+    )
+}
+
+private fun completeAct(state: GameState): GameState {
+    if (state.runStatus != RunStatus.ACTIVE || state.screen != Screen.MAP || state.enemy != null) {
+        return state.invalid("complete_act")
+    }
+    return if (state.act >= 3) {
+        state.copy(runStatus = RunStatus.WON, screen = Screen.RESULT)
+    } else {
+        state.copy(act = state.act + 1, nodeIndex = 0)
     }
 }
 

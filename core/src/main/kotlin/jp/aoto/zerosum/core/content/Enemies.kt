@@ -45,12 +45,12 @@ internal object Enemies {
         enemy("blacksite_warden", EnemyTier.ELITE, 142, 3, deck("enemy_fortify", "enemy_disrupt", "enemy_armor_hit", "enemy_rupture", "enemy_surge", "enemy_heavy", "enemy_jam", "enemy_execute")),
         enemy("recursion_beast", EnemyTier.ELITE, 132, 3, deck("enemy_leech", "enemy_multi", "enemy_charge", "enemy_leech", "enemy_heavy", "enemy_surge", "enemy_rupture", "enemy_execute"), profile = "aggressive"),
         // 毎ターン、公開意図とプレイヤー手札を1枚交換する。
-        enemy("synchronizer", EnemyTier.BOSS, 168, 1, deck("enemy_jab", "enemy_guard", "enemy_shock", "enemy_heavy", "enemy_disrupt", "enemy_surge", "enemy_rupture", "enemy_execute"), BossRule.SYNCHRONIZER),
+        enemy("synchronizer", EnemyTier.BOSS, 100, 1, deck("enemy_jab", "enemy_guard", "enemy_shock", "enemy_heavy", "enemy_disrupt", "enemy_surge", "enemy_rupture", "enemy_execute"), BossRule.SYNCHRONIZER),
         // 敵プール4枚ごとに全攻撃へ+1する。
-        enemy("accumulator", EnemyTier.BOSS, 224, 2, deck("enemy_guard", "enemy_charge", "enemy_heavy", "enemy_fortify", "enemy_armor_hit", "enemy_rupture", "enemy_surge", "enemy_execute"), BossRule.ACCUMULATOR),
+        enemy("accumulator", EnemyTier.BOSS, 80, 2, deck("enemy_guard", "enemy_charge", "enemy_heavy", "enemy_fortify", "enemy_armor_hit", "enemy_rupture", "enemy_surge", "enemy_execute"), BossRule.ACCUMULATOR),
         // 基礎デッキではなくプレイヤーデッキのコピーを使う。
-        enemy("mirror", EnemyTier.BOSS, 246, 3, deck("enemy_jab", "enemy_guard", "enemy_jab", "enemy_guard", "enemy_heavy", "enemy_shock", "enemy_rupture", "enemy_execute"), BossRule.MIRROR),
+        enemy("mirror", EnemyTier.BOSS, 168, 3, deck("enemy_jab", "enemy_guard", "enemy_jab", "enemy_guard", "enemy_heavy", "enemy_shock", "enemy_rupture", "enemy_execute"), BossRule.MIRROR),
         // 2ターン目以降、プレイヤーの回復エナジーを1ずつ減らす最終ボス。
-        enemy("zero", EnemyTier.BOSS, 288, 3, deck("enemy_jam", "enemy_heavy", "enemy_disrupt", "enemy_rupture", "enemy_fortify", "enemy_execute", "enemy_surge", "enemy_execute"), BossRule.ZERO, "aggressive"),
+        enemy("zero", EnemyTier.BOSS, 8, 3, deck("enemy_jam", "enemy_heavy", "enemy_disrupt", "enemy_rupture", "enemy_fortify", "enemy_execute", "enemy_surge", "enemy_execute"), BossRule.ZERO, "aggressive"),
     )
 }

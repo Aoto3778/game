@@ -53,8 +53,9 @@ public object StateFactory {
             player = state.player,
             count = Balance.enemyPoolTake(enemyDefinition.tier, state.ascension),
         )
-        val enemyDeck = baseCards + selected
-        val hpBonus = (enemyDefinition.baseHp * state.ascension) / 50
+        // AI-selected pool cards lead the cycle so denial decisions matter during ordinary combat length.
+        val enemyDeck = selected + baseCards
+        val hpBonus = (enemyDefinition.baseHp * state.ascension) / 40
         val enemy = EnemyState(
             definitionId = enemyId,
             tier = enemyDefinition.tier,

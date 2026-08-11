@@ -23,8 +23,8 @@ internal object ConductorCards {
         card("arc_lash", CardClass.CONDUCTOR, CardRarity.COMMON, 1, listOf(damage(5), status(Status.SHOCK, 1)), listOf(damage(7), status(Status.SHOCK, 2)), attack),
         // 多段による出力シナジーを2×3に抑える。
         card("chain_lightning", CardClass.CONDUCTOR, CardRarity.UNCOMMON, 2, listOf(damage(2, 3), status(Status.SHOCK, 1)), listOf(damage(3, 3), status(Status.SHOCK, 2)), attack),
-        // 感電済みという条件で10→15の高効率を許容。
-        card("voltage_spike", CardClass.CONDUCTOR, CardRarity.UNCOMMON, 1, listOf(damage(10, condition = EffectCondition.IF_SHOCKED)), listOf(damage(15, condition = EffectCondition.IF_SHOCKED)), attack),
+        // 条件不成立でも4火力を保証し、感電時は合計12→17。
+        card("voltage_spike", CardClass.CONDUCTOR, CardRarity.UNCOMMON, 1, listOf(damage(4), damage(8, condition = EffectCondition.IF_SHOCKED)), listOf(damage(5), damage(12, condition = EffectCondition.IF_SHOCKED)), attack),
         // ダメージ無しの感電4は次ターン5相当の遅延火力。
         card("corona", CardClass.CONDUCTOR, CardRarity.COMMON, 1, listOf(status(Status.SHOCK, 4)), listOf(status(Status.SHOCK, 6)), skill),
         // 感電量がそのまま防御に加わる転換札。
@@ -51,10 +51,10 @@ internal object ConductorCards {
         card("phase_shift", CardClass.CONDUCTOR, CardRarity.UNCOMMON, 1, listOf(draw(2), energy(1), discard(1)), listOf(draw(3), energy(1), discard(1)), skill),
         // 攻防4+4を2回攻撃の出力シナジーと交換。
         card("current_divider", CardClass.CONDUCTOR, CardRarity.COMMON, 2, listOf(damage(4, 2), block(4)), listOf(damage(5, 2), block(6)), attack),
-        // 1×4と感電2で出力構築を報酬化。
-        card("cascade", CardClass.CONDUCTOR, CardRarity.UNCOMMON, 1, listOf(damage(1, 4), status(Status.SHOCK, 2)), listOf(damage(2, 4), status(Status.SHOCK, 2)), attack),
-        // 3コストの幕終盤基準を15火力+感電3に設定。
-        card("thunderhead", CardClass.CONDUCTOR, CardRarity.RARE, 3, listOf(damage(15), status(Status.SHOCK, 3)), listOf(damage(21), status(Status.SHOCK, 4)), attack),
+        // 多段の高寄与を抑え、1×4と感電1にする。
+        card("cascade", CardClass.CONDUCTOR, CardRarity.UNCOMMON, 1, listOf(damage(1, 4), status(Status.SHOCK, 1)), listOf(damage(2, 4), status(Status.SHOCK, 1)), attack),
+        // 3コストの外れ値を12火力+感電2へ抑える。
+        card("thunderhead", CardClass.CONDUCTOR, CardRarity.RARE, 3, listOf(damage(12), status(Status.SHOCK, 2)), listOf(damage(17), status(Status.SHOCK, 3)), attack),
         // 出力4の代償として自分に過負荷2を課す。
         card("redline", CardClass.CONDUCTOR, CardRarity.RARE, 1, listOf(status(Status.OUTPUT, 4, true), status(Status.OVERLOAD, 2, true)), listOf(status(Status.OUTPUT, 5, true), status(Status.OVERLOAD, 1, true)), exhaust),
         // 出力3+エナジー1は3コスト消尽の構築到達点。
