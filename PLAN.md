@@ -44,4 +44,4 @@
 - [x] 日本語／英語リソース分離、初回ガイド、演出軽減設定
 - [x] README、LICENSE、lint/test/build、APK署名／メタデータ検証
 - [x] Phase 5コミットを空リポジトリの初期 `main` としてpush
-- [ ] GitHub Releaseへ検証済みdebug APKを公開
+- [x] GitHub Release v1.0.0へ検証済みdebug APKを公開

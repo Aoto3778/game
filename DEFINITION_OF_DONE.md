@@ -51,4 +51,4 @@
 - [x] `README.md` にAPKビルド／インストール手順とASCII UI図がある
 - [x] MIT Licenseがある
 - [x] lint 0件、APK v2 debug署名、package/minSdk/targetSdk metadataを最終検証
-- [ ] Phase 5コミットをGitHubへpushし、配布APKを公開
+- [x] Phase 5コミットをGitHubへpushし、v1.0.0 Releaseへ検証済みAPKを公開
